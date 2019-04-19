@@ -1,0 +1,4 @@
+LIBRARY "cudakernel"
+
+EXPORTS
+ CUDAadd @ 1
