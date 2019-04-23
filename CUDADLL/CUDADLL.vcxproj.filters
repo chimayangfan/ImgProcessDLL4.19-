@@ -30,6 +30,27 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Endianess.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="useful.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="contrib.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="huffman.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="stdfine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="errorType.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="Imgsimulation.cu">
@@ -41,6 +62,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="ThreadPoolExexutor.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="contrib.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="huffman.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="errorType.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
