@@ -171,7 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="contrib.cpp" />
-    <ClCompile Include="errorType.cpp" />
     <ClCompile Include="huffman.cpp" />
     <ClCompile Include="Thread.cpp" />
     <ClCompile Include="ThreadPoolExexutor.cpp" />

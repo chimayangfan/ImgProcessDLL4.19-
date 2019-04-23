@@ -4582,12 +4582,12 @@ IMGSIMULATION_API int HardwareInit(HardwareInfo *HardwareProp)
 			gWorkingGpuId.push_back(i);
 		}
 	}
-	if (HardwareParam.DeviceCount > 5 && HardwareParam.DeviceCount < 1)
+	HardwareParam.DeviceCount = gWorkingGpuId.size();//GPU设备数目
+	HardwareProp->DeviceCount = HardwareParam.DeviceCount;
+	if (HardwareParam.DeviceCount > 5 || HardwareParam.DeviceCount < 1)
 	{
 		return 2;//最多可同时支持5块GPU
 	}
-	HardwareParam.DeviceCount = gWorkingGpuId.size();//GPU设备数目
-	HardwareProp->DeviceCount = HardwareParam.DeviceCount;
 	HardwareParam.ExPointThreads = HardwareParam.DeviceCount;//提点线程数
 	HardwareProp->ExPointThreads = HardwareParam.DeviceCount;
 	HardwareParam.CompThreads = HardwareParam.DeviceCount;//压缩线程数

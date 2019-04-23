@@ -70,8 +70,5 @@
     <ClCompile Include="huffman.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="errorType.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
