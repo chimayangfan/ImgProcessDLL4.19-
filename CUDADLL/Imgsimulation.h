@@ -100,5 +100,8 @@ EXTERN_C IMGSIMULATION_API bool SetCameraPar(int Bufferlength);
 EXTERN_C IMGSIMULATION_API bool SetParameter(Parameter *info, int len);
 EXTERN_C IMGSIMULATION_API void GetParameter(Parameter *info);
 EXTERN_C IMGSIMULATION_API void UnzipPictureFiles(const char * Filepath);
+EXTERN_C IMGSIMULATION_API void UnzipOneBin(const char* Filepath, const char* BinPath);
+EXTERN_C IMGSIMULATION_API void UnzipMultiFeatureBins(const char* Filepath, const int arrsize, const int BinfileIndex[]);
+EXTERN_C IMGSIMULATION_API void UnzipMultiImgBins(const char* Filepath, const int arrsize, const int BinfileIndex[]);
 
 

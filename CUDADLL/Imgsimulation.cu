@@ -6735,6 +6735,37 @@ void UnzipFeatureBins(const char *InputPath, const char *OutputFilename)
 };
 
 /*************************************************
+函数名称: UnzipMultiFeatureBins  //
+
+函数描述: 解包函数；将选择的多个特征压缩文件解包 //
+
+输入参数： const char *Filepath  文件解压路径
+const int arrsize	压缩文件个数
+const char* Binfile[]	压缩文件名数组
+
+输出参数：无													//
+
+返回值  : 无													//
+
+其他说明: 无 //
+.
+
+*************************************************/
+IMGSIMULATION_API void UnzipMultiFeatureBins(const char* Filepath, const int arrsize, const int BinfileIndex[])
+{
+	if (arrsize == 0)//无输入
+		return;
+	char Binfile[200];//压缩文件名
+	//剩余压缩文件个数不足5个时，单独解压
+	for (int index = 0; index < arrsize; index++)
+	{
+		sprintf(Binfile, "%s//%d%s", Filepath, BinfileIndex[index], ".bin");
+		UnzipFeatureBins(Binfile, Filepath);
+	}
+	delete[] Binfile;
+}
+
+/*************************************************
 函数名称: UnzipFeatureFiles  //
 
 函数描述: 解包函数；将某一个文件夹下的大特征文件（包含多张图片特征的文件.bin文件）解压成单个特征文件。
@@ -6765,7 +6796,7 @@ IMGSIMULATION_API void UnzipFeatureFiles(const char * Filepath)
 }
 
 //解压图片函数
-void UnzipOneBin(const char* Filepath, const char* BinPath)
+IMGSIMULATION_API void UnzipOneBin(const char* Filepath, const char* BinPath)
 {
 	//Package temp(BinPath, content);
 	Package temp(BinPath);
@@ -6773,11 +6804,78 @@ void UnzipOneBin(const char* Filepath, const char* BinPath)
 	return;
 }
 
+/*************************************************
+函数名称: UnzipSomeImgBins  //
+
+函数描述: 解包函数；将选择的多个图像压缩文件解包 //
+
+输入参数： const char *Filepath  文件解压路径
+		   const int arrsize	压缩文件个数
+		   const char* Binfile[]	压缩文件名数组
+
+输出参数：无													//
+
+返回值  : 无													//
+
+其他说明: 无 //
+.
+
+*************************************************/
+IMGSIMULATION_API void UnzipMultiImgBins(const char* Filepath, const int arrsize, const int BinfileIndex[])
+{
+	if (arrsize == 0)//无输入
+		return;
+	char Binfile[200];//压缩文件名
+	int index = 0;
+	for (int i = 0; i + 5 < arrsize; i = i + 5)
+	{
+		sprintf(Binfile, "%s//%d%s", Filepath, BinfileIndex[i], ".bin");
+		thread th1(UnzipOneBin, Filepath, Binfile);
+		sprintf(Binfile, "%s//%d%s", Filepath, BinfileIndex[i+1], ".bin");
+		thread th2(UnzipOneBin, Filepath, Binfile);
+		sprintf(Binfile, "%s//%d%s", Filepath, BinfileIndex[i+2], ".bin");
+		thread th3(UnzipOneBin, Filepath, Binfile);
+		sprintf(Binfile, "%s//%d%s", Filepath, BinfileIndex[i+3], ".bin");
+		thread th4(UnzipOneBin, Filepath, Binfile);
+		sprintf(Binfile, "%s//%d%s", Filepath, BinfileIndex[i+4], ".bin");
+		thread th5(UnzipOneBin, Filepath, Binfile);
+		index = i + 5;
+		th1.join();
+		th2.join();
+		th3.join();
+		th4.join();
+		th5.join();
+	}
+	//剩余压缩文件个数不足5个时，单独解压
+	for (; index < arrsize; index++)
+	{
+		sprintf(Binfile, "%s//%d%s", Filepath, BinfileIndex[index], ".bin");
+		Package cc(Binfile);
+		cc.UnPack(Binfile, Filepath);
+	}
+	delete[] Binfile;
+}
+
+/*************************************************
+函数名称: UnzipPictureFiles  //
+
+函数描述: 解包函数；文件夹下的所有图像压缩文件解包 //
+
+输入参数： const char *Filepath  包含多张图片的压缩文件（50张，跟bufferlenth有关）
+
+输出参数：无													//
+
+返回值  : 无													//
+
+其他说明: 无 //
+.
+
+*************************************************/
 IMGSIMULATION_API void UnzipPictureFiles(const char * Filepath)
 {
 	vector<string>FeatureFilesPass;
 	GetFiles(Filepath, FeatureFilesPass);
-	int interpret;
+	int interpret = 0;
 	if (FeatureFilesPass.size() > 0)
 	{
 		for (int i = 0; i + 5 < FeatureFilesPass.size(); i = i + 5)
